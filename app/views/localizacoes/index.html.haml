@@ -1,0 +1,52 @@
+%script{:src => "//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry", :type => "text/javascript"}
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js", :type => "text/javascript"}
+
+%h1 Listing localizacoes
+
+%table
+  %thead
+    %tr
+      %th Nome
+      %th Latitude
+      %th Longitude
+      %th
+      %th
+      %th
+
+  %tbody
+    - @localizacoes.each do |localizacao|
+      %tr
+        %td= localizacao.nome
+        %td= localizacao.latitude
+        %td= localizacao.longitude
+        %td= link_to 'Show', localizacao
+        %td= link_to 'Edit', edit_localizacao_path(localizacao)
+        %td= link_to 'Destroy', localizacao, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Localizacao', new_localizacao_path
+
+%br
+%hr
+
+%div{style:'width: 100%;'}
+  #map{style:'width: 100%; height: 450px;'}
+
+
+:javascript
+  handler = Gmaps.build('Google');
+  handler.buildMap({
+      provider: {
+        streetViewControl: false,
+        panControl: false,
+        animation: google.maps.Animation.DROP
+      },
+      internal: {
+        id: 'map'
+      }},
+    function(){
+      markers = handler.addMarkers(#{@hash.to_json});
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
