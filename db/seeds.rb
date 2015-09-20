@@ -8,3 +8,4 @@
 
 Localizacao.create nome: "Local A", latitude: "-3.7901514", longitude: "-38.5492008"
 Localizacao.create nome: "Local B", latitude: "-3.7900614", longitude: "-38.5412008"
+Localizacao.create nome: "Local C", latitude: "-3.7901614", longitude: "-38.5482008"
